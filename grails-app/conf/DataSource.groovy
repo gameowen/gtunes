@@ -13,14 +13,14 @@ hibernate {
 environments {
 	development {
 		dataSource {
-			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-			url = "jdbc:hsqldb:mem:devDB"
+			dbCreate = "update" // one of 'create', 'create-drop','update'
+			url = "jdbc:hsqldb:file:devDb;shutdown=true"
 		}
 	}
 	test {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:mem:testDb"
+			url = "jdbc:hsqldb:file:devDb;shutdown=true"
 		}
 	}
 	production {

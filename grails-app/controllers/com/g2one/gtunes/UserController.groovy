@@ -5,7 +5,9 @@ class UserController {
    def register = {
       if (request.method == "POST") {
          def u = new User(params)
-         if (u.password != params.confirm) {
+         if (User.findByLogin(params.login)) {
+            return [ user: u, message: 'user.already.exsists' ]
+         } else (u.password != params.confirm) {
             u.errors.rejectValue("password", "user.password.dontmatch")
             return [ user: u ]
          } else if (u.save()) {
@@ -22,9 +24,9 @@ class UserController {
       if (request.method == 'POST') {
          if (!cmd.hasErrors()) {
             session.user = cmd.getUser()
-            redirect(controller: 'store')
+            render(template: 'welcome')
          } else {
-            render(view: '/store/index', model: [loginCmd: cmd])
+            render(template: '/loginForm', model: [loginCmd: cmd])
          }
       } else {
          render(view: '/store/index')

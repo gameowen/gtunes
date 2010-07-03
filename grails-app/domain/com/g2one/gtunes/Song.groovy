@@ -8,6 +8,9 @@ class Song {
    Integer year
    Integer trackNumber
 
+   Date dateCreated
+   Date lastUpdated
+
    Album album
    Artist artist
 
@@ -19,6 +22,8 @@ class Song {
    }
 
    static optionals = ['genre', 'year', 'trackNumber']
+
+   static searchable = [only: ['genre', 'title']]
 
    String toString() { title }
 }

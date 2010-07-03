@@ -1,10 +1,13 @@
 package com.g2one.gtunes
 
-class Album {
+class Album implements Serializable {
 
    String title
    Integer year
    String genre
+
+   Date dateCreated
+   Date lastUpdated
 
    List songs
 
@@ -16,6 +19,8 @@ class Album {
    static haMany = [ songs: Song ]
    static belongsTo = [ artist: Artist ]
    static optionals = [ 'year', 'genre' ]
+
+   static searchable = [ only: ['genre', 'title' ] ]
 
    String toString() { title }
 }

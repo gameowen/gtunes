@@ -10,7 +10,12 @@ class StoreController {
             distinct "genre"
          }
       }
-      [ genres: genreList.sort() ]
+      [ 
+         genres: genreList.sort(),
+	 top5Albums: Album.list (max: 5, sort: 'dateCreated', order: 'desc'),
+	 top5Songs: Song.list (max: 5, sort: 'dateCreated', order: 'desc'),
+	 top5Artist: Artist.list (max: 5, sort: 'dateCreated', order: 'desc')
+      ]
    }
 
    def genre = {
@@ -19,18 +24,37 @@ class StoreController {
       def offset = params.offset?.toInteger() ?: 0
 
       def total = Album.countByGenre(params.name)
-      def albumList = Album.withCriteria {
-         eq 'genre' , params.name
-         projections {
-            artist { order 'name' }
-         }
-         maxResults max
-         firstResult offset
-      }
+      def albumList = Album.findByGenre (
+         params.name,
+	 [ max: max <= 100 ? max : 10, fetch: [ artist: 'join' ] ]
+      )
       [
-         albums: albumList,
+         albums: albumList.sort { it.artist.name },
          totalAlbums: total,
          genre: params.name
       ]
+   }
+
+   def search = {
+      def q = params.q ?: null
+      def searchResults
+      if (q) {
+	 searchResults = [
+		albumResults: trySearch { Album.search(q, [ max: 10 ]) },
+		artistResults: trySearch { Artist.search(q, [ max: 10]) },
+		songResults: trySearch { Song.search(q, [max: 10]) },
+		q: q.encodeAsHTML()
+	 ]
+      }
+      render (template: 'searchResults', model: searchResults)
+   }
+
+   def trySearch(Closure callable) {
+	try {
+		return callable.call()
+	} catch (Exception e) {
+		log.debug "Search error: ${e.message}", e
+		return []
+	}
    }
 }

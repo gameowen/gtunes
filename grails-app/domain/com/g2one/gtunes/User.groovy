@@ -7,6 +7,9 @@ class User {
     String firstName
     String lastName
 
+    Date dateCreated
+    Date lastUpdated
+
     static hasMany = [ purchasedSongs: Song ]
 
     static constraints = {
