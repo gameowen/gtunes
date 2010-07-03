@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="koala" id="0" name="UserControllerTests" package="com.g2one.gtunes" tests="7" time="1.431" timestamp="2010-07-01T20:55:50">
+      <properties />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testPasswordDontMatch" time="1.115" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testRegistrationFailed" time="0.099" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testRegistrationSuccess" time="0.046" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testLoginUserNotFound" time="0.09" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testLoginPasswordInvalid" time="0.023" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testLoginSuccess" time="0.024" />
+
+      <testcase classname="com.g2one.gtunes.UserControllerTests" name="testLogout" time="0.01" />
+
+      <system-out><![CDATA[--Output from testPasswordDontMatch--
+--Output from testRegistrationFailed--
+--Output from testRegistrationSuccess--
+--Output from testLoginUserNotFound--
+--Output from testLoginPasswordInvalid--
+--Output from testLoginSuccess--
+--Output from testLogout--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testPasswordDontMatch--
+--Output from testRegistrationFailed--
+--Output from testRegistrationSuccess--
+--Output from testLoginUserNotFound--
+--Output from testLoginPasswordInvalid--
+--Output from testLoginSuccess--
+--Output from testLogout--
+]]></system-err>
+
+  </testsuite>
+</testsuites>
