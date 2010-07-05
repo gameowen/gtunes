@@ -16,7 +16,7 @@ class Album implements Serializable {
       year (range: 1900..2100)
    }
 
-   static haMany = [ songs: Song ]
+   static hasMany = [ songs: Song ]
    static belongsTo = [ artist: Artist ]
    static optionals = [ 'year', 'genre' ]
 

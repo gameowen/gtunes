@@ -17,7 +17,7 @@
 		
 		<div id="loginBox" class="loginBox">
 			<g:if test="${session?.user}">
-				<g:render template="/user/welcomeMessage"></g:render>
+				<g:render template="/user/welcome"></g:render>
 			</g:if>
 			<g:else>
 				<g:render template="/user/loginForm"></g:render>				

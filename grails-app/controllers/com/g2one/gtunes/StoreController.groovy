@@ -15,21 +15,20 @@ class StoreController {
          genres: genreList.sort(),
          top5Albums: Album.list (max: 5, sort: 'dateCreated', order: 'desc'),
          top5Songs: Song.list (max: 5, sort: 'dateCreated', order: 'desc'),
-         top5Artist: Artist.list (max: 5, sort: 'dateCreated', order: 'desc')
+         top5Artists: Artist.list (max: 5, sort: 'dateCreated', order: 'desc')
       ]
    }
 
    def genre = {
       def max = params.max?.toInteger() ?: 10;
-      max = max > 100 ? 10 : max
-      def offset = params.offset?.toInteger() ?: 0
+      max = max <= 100 ? max : 10
 
       def total = Album.countByGenre(params.name)
-      def albumList = Album.findByGenre (
+      def albumList = Album.findAllByGenre (
          params.name,
-         [ max: max <= 100 ? max : 10, fetch: [ artist: 'join' ] ]
+         [ offset: params.offset, max: max, fetch: [ artist: 'join' ] ]
       )
-      [
+      return [
          albums: albumList.sort { it.artist.name },
          totalAlbums: total,
          genre: params.name
