@@ -71,7 +71,7 @@ class UserControllerTests extends ControllerUnitTestCase {
       controller.login(cmd)
       assertTrue cmd.hasErrors()
       assertEquals "user.not.found", cmd.errors.login
-      assertEquals "/store/index", renderArgs.view
+      assertEquals "loginForm", renderArgs.template
    }
 
    void testLoginPasswordInvalid() {
@@ -83,7 +83,7 @@ class UserControllerTests extends ControllerUnitTestCase {
       controller.login(cmd)
       assertTrue cmd.hasErrors()
       assertEquals "user.password.invalid", cmd.errors.password
-      assertEquals "/store/index", renderArgs.view
+      assertEquals "loginForm", renderArgs.template
    }
 
    void testLoginSuccess() {
@@ -95,7 +95,7 @@ class UserControllerTests extends ControllerUnitTestCase {
       controller.login(cmd)
       assertFalse cmd.hasErrors()
       assertNotNull mockSession.user
-      assertEquals 'store', redirectArgs.controller
+      assertEquals 'welcome', renderArgs.template
    }
 
    void testLogout() {

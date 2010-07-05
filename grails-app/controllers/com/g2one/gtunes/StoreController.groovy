@@ -2,7 +2,8 @@ package com.g2one.gtunes
 
 class StoreController {
 
-   def index = { }
+   def index = {
+   }
 
    def shop = {
       def genreList = Album.withCriteria {
@@ -12,9 +13,9 @@ class StoreController {
       }
       [ 
          genres: genreList.sort(),
-	 top5Albums: Album.list (max: 5, sort: 'dateCreated', order: 'desc'),
-	 top5Songs: Song.list (max: 5, sort: 'dateCreated', order: 'desc'),
-	 top5Artist: Artist.list (max: 5, sort: 'dateCreated', order: 'desc')
+         top5Albums: Album.list (max: 5, sort: 'dateCreated', order: 'desc'),
+         top5Songs: Song.list (max: 5, sort: 'dateCreated', order: 'desc'),
+         top5Artist: Artist.list (max: 5, sort: 'dateCreated', order: 'desc')
       ]
    }
 
@@ -26,7 +27,7 @@ class StoreController {
       def total = Album.countByGenre(params.name)
       def albumList = Album.findByGenre (
          params.name,
-	 [ max: max <= 100 ? max : 10, fetch: [ artist: 'join' ] ]
+         [ max: max <= 100 ? max : 10, fetch: [ artist: 'join' ] ]
       )
       [
          albums: albumList.sort { it.artist.name },
@@ -39,22 +40,22 @@ class StoreController {
       def q = params.q ?: null
       def searchResults
       if (q) {
-	 searchResults = [
-		albumResults: trySearch { Album.search(q, [ max: 10 ]) },
-		artistResults: trySearch { Artist.search(q, [ max: 10]) },
-		songResults: trySearch { Song.search(q, [max: 10]) },
-		q: q.encodeAsHTML()
-	 ]
+         searchResults = [
+            albumResults: trySearch { Album.search(q, [ max: 10 ]) },
+            artistResults: trySearch { Artist.search(q, [ max: 10]) },
+            songResults: trySearch { Song.search(q, [max: 10]) },
+            q: q.encodeAsHTML()
+         ]
       }
       render (template: 'searchResults', model: searchResults)
    }
 
    def trySearch(Closure callable) {
-	try {
-		return callable.call()
-	} catch (Exception e) {
-		log.debug "Search error: ${e.message}", e
-		return []
-	}
+      try {
+         return callable.call()
+      } catch (Exception e) {
+         log.debug "Search error: ${e.message}", e
+         return []
+      }
    }
 }

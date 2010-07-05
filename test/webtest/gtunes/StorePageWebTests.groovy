@@ -9,9 +9,17 @@ class StorePageWebTests extends grails.util.WebTest {
    // If you require a specific sequence, prefix the method name (following 'test') with a sequence
    // e.g. test001XclassNameXListNewDelete
 
-   void testDefaultRedirect() {
+   void test001DefaultRedirect() {
       invoke '/', description: 'Go to default page'
       verifyTitle 'gTunes Store'
+   }
+
+   void test002LoginNonExsistingUser() {
+      invoke '/', description: 'Try to log in as a non exsisting user'
+      setInputField name: 'login', value: 'dummy'
+      setInputField name: 'password', value: 'dummy'
+      clickButton name: 'loginButton'
+      //verifyXPath xpath: "//div[2]/div/ul/li", text: 'User not found!'
    }
 
 }

@@ -26,7 +26,7 @@ class UserController {
             session.user = cmd.getUser()
             render(template: 'welcome')
          } else {
-            render(template: '/loginForm', model: [loginCmd: cmd])
+            render(template: 'loginForm', model: [loginCmd: cmd])
          }
       } else {
          render(view: '/store/index')

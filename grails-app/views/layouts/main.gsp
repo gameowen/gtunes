@@ -7,7 +7,7 @@
         <g:layoutHead />
 		<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'gtunes.css')}" type="text/css" media="screen" charset="utf-8">
         <g:javascript library="scriptaculous" />			
-        <g:javascript library="application" />	
+        <g:javascript library="prototype" />
 
     </head>
     <body>

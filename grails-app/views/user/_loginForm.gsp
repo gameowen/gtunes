@@ -1,4 +1,6 @@
-<g:if test="${loginCmd?.hasErrors()}"><div id="message" class="errorMessage"><g:renderErrors bean="${loginCmd}" /></div></g:if>
+<g:if test="${loginCmd?.hasErrors()}">
+  <div id="message" class="errorMessage"><g:renderErrors bean="${loginCmd}" /></div>
+</g:if>
 <g:formRemote 
 	name="loginForm" 
 	url="[controller:'user',action:'login']" 
