@@ -56,6 +56,13 @@ environments {
 
 }
 
+beans {
+   albumArtService {
+      // Set to your Amazon Web Service Access key to enable album art
+      accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
+   }
+}
+
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console
