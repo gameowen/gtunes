@@ -1,11 +1,11 @@
 class UrlMappings {
-    static mappings = {
+   static mappings = {
       "/$controller/$action?/$id?"{
 	      constraints {
-			 // apply constraints here
-		  }
-	  }
-      "/" (controller: "store")
+            // apply constraints here
+         }
+      }
+      "/" (controller: "store", action: 'shop')
       "/genre/$name" (controller: "store", action="genre")
 	  "500"(view:'/error')
 	}
