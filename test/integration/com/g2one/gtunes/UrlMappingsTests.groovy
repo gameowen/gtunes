@@ -18,7 +18,7 @@ class UrlMappingsTests extends GrailsUrlMappingsTestCase {
    }
 
    void testRootMappings() {
-      assertUrlMapping('/', controller: 'store', action: 'index')
+      assertUrlMapping('/', controller: 'store', action: 'shop')
    }
 
    void testGenreMappings() {
