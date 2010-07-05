@@ -7,7 +7,7 @@ class UserController {
          def u = new User(params)
          if (User.findByLogin(params.login)) {
             return [ user: u, message: 'user.already.exsists' ]
-         } else (u.password != params.confirm) {
+         } else if (u.password != params.confirm) {
             u.errors.rejectValue("password", "user.password.dontmatch")
             return [ user: u ]
          } else if (u.save()) {
