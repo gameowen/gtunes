@@ -14,7 +14,10 @@
 	padding-left:20px;
 	padding-bottom:53px;
 	color:white;
-	width:230px;
+	width:250px;
+}
+#searchBox {
+	margin-bottom:20px;
 }
 #navPane {
 	float:left;
@@ -79,7 +82,9 @@ p {
 	right:20px;
 }
 #top5Panel {
-	float:right;
+	right:0px;
+	top:200px;
+	position:absolute;
 	margin-right:20px;
 }
 .top5Item {
@@ -174,4 +179,20 @@ p {
 	color:#01D2FA;
 	font-size:0.9em;
 	text-decoration:underline;
+}
+.genreList {
+	margin-top:10px;
+}
+.genre {
+	border-bottom:1px solid grey;
+	width:300px;
+	margin-bottom:5px;
+}
+
+.albumsTable {
+	margin-top:20px;
+	width:80%;
+}
+.paginateButtons {
+	width:79%;
 }
