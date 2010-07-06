@@ -3,4 +3,5 @@
 /target/classes/*.*
 /stacktrace.log
 /devDb.*
-/third-party/classes
+/cobertura.ser
+/third-party/AmazonProductAdvtApiSampleJavaQuery/classes
