@@ -1,8 +1,7 @@
 package com.g2one.gtunes
 
 import grails.test.*
-import com.amazonaws.a2s.model.*
-import com.amazonaws.a2s.*
+import com.amazon.advertising.api.AmazonPAAClient
 
 
 class AlbumArtTagLibTests extends GroovyPagesTestCase {
@@ -14,8 +13,8 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
    }
 
    protected void tearDown() {
+      GroovySystem.metaClassRegistry.removeMetaClass(AmazonPAAClient)
       super.tearDown()
-      GroovySystem.metaClassRegistry.removeMetaClass(AmazonA2SClient)
    }
 
    void testMissingArgs() {
@@ -35,8 +34,8 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
    }
 
    void testExceptionFromAmazon() {
-      AmazonA2SClient.metaClass.itemSearch = {
-         ItemSearchRequest request ->
+      AmazonPAAClient.metaClass.getAlbumArtUrl = {
+         String album, String artist ->
          throw new Exception('amazon exception')
       }
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
@@ -48,11 +47,13 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
    }
 
    void testAlbumArtFromAmazon() {
-      AmazonA2SClient.metaClass.itemSearch = {
-         ItemSearchRequest request ->
-         [items:[[item:[[largeImage:[URL:'/mock/url/album.jpg']]]]]]
+      AmazonPAAClient.metaClass.getAlbumArtUrl = {
+         String album, String artist ->
+         return '/mock/url/album.jpg'
       }
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
+      albumArtService.secretAccessKey = 'dummy'
+      albumArtService.endpoint = 'ecw.amazon.com' 
 
       def template = '<music:albumArt artist="Radiohead" album="The Bends" />'
       // expect extra space before '>' and after last argument

@@ -1,8 +1,7 @@
 package com.g2one.gtunes
 
 import grails.test.*
-import com.amazonaws.a2s.model.*
-import com.amazonaws.a2s.*
+import com.amazon.advertising.api.AmazonPAAClient
 
 
 class AlbumArtServiceTests extends GrailsUnitTestCase {
@@ -14,7 +13,7 @@ class AlbumArtServiceTests extends GrailsUnitTestCase {
 
    protected void tearDown() {
       super.tearDown()
-      GroovySystem.metaClassRegistry.removeMetaClass(AmazonA2SClient)
+      GroovySystem.metaClassRegistry.removeMetaClass(AmazonPAAClient)
    }
 
    void testNoAccessKey() {
@@ -23,8 +22,8 @@ class AlbumArtServiceTests extends GrailsUnitTestCase {
    }
 
    void testAmazonException() {
-      AmazonA2SClient.metaClass.itemSearch = {
-         ItemSearchRequest request ->
+      AmazonPAAClient.metaClass.getAlbumArtUrl = {
+         String album, String artist ->
             throw new Exception('Amazon exception')
       }
       def albumArtService = new AlbumArtService()
@@ -33,9 +32,9 @@ class AlbumArtServiceTests extends GrailsUnitTestCase {
    }
 
    void testAmazonResponse() {
-      AmazonA2SClient.metaClass.itemSearch = {
-         ItemSearchRequest request ->
-            [items:[[item:[[largeImage:[URL:'/mock/url/album.jpg']]]]]]
+      AmazonPAAClient.metaClass.getAlbumArtUrl = {
+         String album, String artist ->
+            '/mock/url/album.jpg'
       }
       def albumArtService = new AlbumArtService()
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
