@@ -3,3 +3,4 @@
 /target/classes/*.*
 /stacktrace.log
 /devDb.*
+/third-party/classes
