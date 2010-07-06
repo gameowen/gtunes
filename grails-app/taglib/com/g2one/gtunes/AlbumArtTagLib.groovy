@@ -7,13 +7,13 @@ class AlbumArtTagLib {
    def albumArtService
 
    def albumArt = {
-      attr, body ->
+      attrs, body ->
       def artist = attrs.remove('artist')?.toString()
       def album = attrs.remove('album')?.toString()
       def width = attrs.remove('width') ?: 200
       if (artist && album) {
-         def albumArt = albumArtService.getAlbumArt(artist, albums)
-         if (albumArt.startingWith('/')) {
+         def albumArt = albumArtService.getAlbumArt(artist, album)
+         if (albumArt.startsWith('/')) {
             albumArt = "${request.contextPath}${albumArt}"
          }
          out << "<img width=\"${width}\" src=\"${albumArt}\" border=\"0\" "

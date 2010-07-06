@@ -23,15 +23,15 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
 
       println 'testing no artist nor album'
       def template = '<music:albumArt />'
-      assertOutEquals '', template
+      assertOutputEquals '', template
 
       println 'testing no album'
       template = '<music:albumArt artist="U2" />'
-      assertOutEquals '', template
+      assertOutputEquals '', template
 
       println 'testing no artist'
       template = '<music:albumArt album="Never Mind" />'
-      assertOutEquals '', template
+      assertOutputEquals '', template
    }
 
    void testExceptionFromAmazon() {
@@ -42,8 +42,9 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
 
       def template = '<music:albumArt artist="Radiohead" album="The Bends" />'
-      def expected = "<img width=\"200\" src=\"${AlbumArtService.DEFAULT_ALBUM_ART_IMAGE}\" border=\"0\"></img>"
-      assertOutEquals expected, template
+      // expect extra space before '>' and after last argument
+      def expected = "<img width=\"200\" src=\"${AlbumArtService.DEFAULT_ALBUM_ART_IMAGE}\" border=\"0\" ></img>"
+      assertOutputEquals expected, template
    }
 
    void testAlbumArtFromAmazon() {
@@ -54,11 +55,13 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
 
       def template = '<music:albumArt artist="Radiohead" album="The Bends" />'
-      def expected = '<img width="200" src="/mock/url/album.jpg" border="0"></img>'
-      assertOutEquals expected, template
+      // expect extra space before '>' and after last argument
+      def expected = '<img width="200" src="/mock/url/album.jpg" border="0" ></img>'
+      assertOutputEquals expected, template
 
       template = '<music:albumArt artist="Radiohead" album="The Bends" width="100"/>'
-      expected = '<img width="100" src="/mock/url/album.jpg" border="0"></img>'
-      assertOutEquals expected, template
+      // expect extra space before '>' and after last argument
+      expected = '<img width="100" src="/mock/url/album.jpg" border="0" ></img>'
+      assertOutputEquals expected, template
    }
 }

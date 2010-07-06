@@ -60,6 +60,8 @@ beans {
    albumArtService {
       // Set to your Amazon Web Service Access key to enable album art
       accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
+      secretAccessKey = 'UDY/yEmucv/09dvdGbyCjhctjMmz+8AQ5lj7iVAT'
+      endpoint = 'ecs.amazonaws.com'
    }
 }
 
