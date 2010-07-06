@@ -7,7 +7,7 @@ import net.sf.ehcache.Element
 class AlbumArtService {
 
    static transactional = false
-   static DEFAULT_ALBUM_ART_IMAGE = '/images/no-album-art.gif'
+   static DEFAULT_ALBUM_ART_IMAGE = 'images/no-album-art.gif'
 
    String accessKeyId
    String secretAccessKey
@@ -18,7 +18,8 @@ class AlbumArtService {
       if (accessKeyId) {
          if (album && artist) {
             def key = new AlbumArtKey(album: album, artist: artist)
-            def url = albumArtCache?.get(key)?.value
+            def url = null
+            //= albumArtCache?.get(key)?.value
             if (!url) {
                try {
                   def client = new AmazonPAAClient(
@@ -28,8 +29,11 @@ class AlbumArtService {
                   )
                   url = client.getAlbumArtUrl(artist, album)
                   // get the URL to the amazon image (if one was return)
-                  if (url) {
-                     albumArtCache?.put(new Element(key, url))
+                  if (!url?.isEmpty()) {
+                     //albumArtCache?.put(new Element(key, url))
+                  } else {
+                     log.warn "No album art found on Amazon"
+                     return DEFAULT_ALBUM_ART_IMAGE
                   }
                } catch (Exception e) {
                   log.error "Problem communicating with Amazon: ${e.message}", e

@@ -14,5 +14,6 @@ class Artist implements Serializable {
    static hasMany = [ albums: Album ]
 
    static searchable = [ only: [ 'name' ] ]
+
    String toString() { name }
 }

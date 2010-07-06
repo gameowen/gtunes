@@ -24,6 +24,7 @@
 		</div>
 	</div>
 </div>
+
 <g:javascript>
 	Effect.Appear($('album${album.id}'))
 </g:javascript>
