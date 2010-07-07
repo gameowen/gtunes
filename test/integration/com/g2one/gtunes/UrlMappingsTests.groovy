@@ -28,7 +28,7 @@ class UrlMappingsTests extends GrailsUrlMappingsTestCase {
    }
 
    void testErrorMappings() {
-      assertUrlMapping(500, view: '/error')
+      assertUrlMapping(500, view: 'error')
    }
 }
 

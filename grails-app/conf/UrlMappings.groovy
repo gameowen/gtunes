@@ -7,6 +7,6 @@ class UrlMappings {
       }
       "/" (controller: "store", action: 'shop')
       "/genre/$name" (controller: "store", action="genre")
-	  "500"(view:'/error')
+	  "500"(view:'error')
 	}
 }

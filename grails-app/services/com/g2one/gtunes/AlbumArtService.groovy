@@ -1,7 +1,6 @@
 package com.g2one.gtunes
 
 import com.amazon.advertising.api.AmazonPAAClient
-import com.amazonaws.a2s.*
 import net.sf.ehcache.Element
 
 class AlbumArtService {
@@ -10,27 +9,27 @@ class AlbumArtService {
    static DEFAULT_ALBUM_ART_IMAGE = 'images/no-album-art.gif'
 
    String accessKeyId
-   String secretAccessKey
+   String secretKey
    String endpoint
    def albumArtCache
 
    String getAlbumArt(String artist, String album) {
-      if (accessKeyId) {
+      if (accessKeyId && secretKey && endpoint) {
          if (album && artist) {
             def key = new AlbumArtKey(album: album, artist: artist)
-            def url = null
-            //= albumArtCache?.get(key)?.value
+            def url = albumArtCache?.get(key)?.value
             if (!url) {
                try {
                   def client = new AmazonPAAClient(
                      endpoint: endpoint,
                      accessKeyId: accessKeyId,
-                     secretKey: secretAccessKey
+                     secretKey: secretKey
                   )
                   url = client.getAlbumArtUrl(artist, album)
                   // get the URL to the amazon image (if one was return)
                   if (!url?.isEmpty()) {
-                     //albumArtCache?.put(new Element(key, url))
+                     log.info "new cache entry: [ ${url}. ${key} ]"
+                     albumArtCache?.put(new Element(key, url.toString()))
                   } else {
                      log.warn "No album art found on Amazon"
                      return DEFAULT_ALBUM_ART_IMAGE
@@ -46,15 +45,19 @@ class AlbumArtService {
             return DEFAULT_ALBUM_ART_IMAGE
          }
       } else {
-         log.warn """No Amazon access key specified.
-         Set [beans.albumArtService.accessKeyId] in Config.groovy"""
+         log.warn """No Amazon access key, secret key or endpoint specified.
+         Set [
+            beans.albumArtService.accessKeyId,
+            beans.albumArtService.secretKey,
+            beans.albumArtService.endpoint,
+         ] in Config.groovy"""
          return DEFAULT_ALBUM_ART_IMAGE
       }
    }
 }
 
 
-class AlbumArtKey implements Serializable {
+class AlbumArtKey implements java.io.Serializable {
    String artist
    String album
 
@@ -65,4 +68,6 @@ class AlbumArtKey implements Serializable {
    int hashCode() {
       artist.hashCode() + album.hashCode()
    }
+
+   String toString() { "$artist - $album" }
 }

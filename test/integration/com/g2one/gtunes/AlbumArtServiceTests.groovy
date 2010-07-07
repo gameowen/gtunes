@@ -40,4 +40,14 @@ class AlbumArtServiceTests extends GrailsUnitTestCase {
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
       assertEquals '/mock/url/album.jpg', albumArtService.getAlbumArt("RadioHead", "The Bends")
    }
+
+   void testAlbumArtNotFoundAtAmazon() {
+      AmazonPAAClient.metaClass.getAlbumArtUrl = {
+         String album, String artist ->
+            return null
+      }
+      def albumArtService = new AlbumArtService()
+      albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
+      assertEquals AlbumArtService.DEFAULT_ALBUM_ART_IMAGE, albumArtService.getAlbumArt("RadioHead", "The Bends")
+   }
 }

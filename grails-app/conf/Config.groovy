@@ -60,35 +60,41 @@ beans {
    albumArtService {
       // Set to your Amazon Web Service Access key to enable album art
       accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
-      secretAccessKey = 'UDY/yEmucv/09dvdGbyCjhctjMmz+8AQ5lj7iVAT'
+      secretKey = 'UDY/yEmucv/09dvdGbyCjhctjMmz+8AQ5lj7iVAT'
       endpoint = 'ecs.amazonaws.com'
    }
 }
 
 // log4j configuration
-log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
-
-
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-	       'org.codehaus.groovy.grails.web.pages', //  GSP
-	       'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-	       'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-	       'org.codehaus.groovy.grails.web.mapping', // URL mapping
-	       'org.codehaus.groovy.grails.commons', // core / classloading
-	       'org.codehaus.groovy.grails.plugins', // plugins
-	       'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-	       'org.springframework',
-	       'org.hibernate',
-           'net.sf.ehcache.hibernate'
-
-    warn   'org.mortbay.log'
+log4j {
+    appender.stdout = "org.apache.log4j.ConsoleAppender"
+    appender.'stdout.layout'="org.apache.log4j.PatternLayout"
+    appender.'stdout.layout.ConversionPattern'='[%r] %c{2} %m%n'
+    appender.stacktraceLog = "org.apache.log4j.FileAppender"
+    appender.'stacktraceLog.layout'="org.apache.log4j.PatternLayout"
+    appender.'stacktraceLog.layout.ConversionPattern'='[%r] %c{2} %m%n'
+    appender.'stacktraceLog.File'="stacktrace.log"
+    rootLogger="error,stdout"
+    logger {
+        grails="error"
+        StackTrace="error,stacktraceLog"
+        org {
+            codehaus.groovy.grails.web.servlet="error"  //  controllers
+            codehaus.groovy.grails.web.pages="error" //  GSP
+            codehaus.groovy.grails.web.sitemesh="error" //  layouts
+            codehaus.groovy.grails."web.mapping.filter"="error" // URL mapping
+            codehaus.groovy.grails."web.mapping"="error" // URL mapping
+            codehaus.groovy.grails.commons="info" // core / classloading
+            codehaus.groovy.grails.plugins="error" // plugins
+            codehaus.groovy.grails.orm.hibernate="error" // hibernate integration
+            springframework="off"
+            hibernate="off"
+        }
+        com {
+           g2one.gtunes="info"   // gtunes code
+           amazon.advertising.api="warn"  // AmazonPAA Client
+        }
+    }
+    additivity.StackTrace=false
 }
 
-
-     
