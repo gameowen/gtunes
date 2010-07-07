@@ -5,11 +5,11 @@
 	name="loginForm" 
 	url="[controller:'user',action:'login']" 
 	update="loginBox"
-	onComplete="loginComplete()">
+	onComplete="GTunes.onLogin()">
 	<div>Username:</div>
 	<g:textField name="login"></g:textField>
 	<div>Password:</div>
 	<g:passwordField name="password"></g:passwordField>			
 	<br/>
-	<input type="image" src="${createLinkTo(dir:'images', file:'login-button.gif')}" name="loginButton" id="loginButton" border="0"></input>	
+	<input type="image" src="${createLinkTo(dir:'images', file:'login-button.gif')}" name="loginButton" id="loginButton"/>
 </g:formRemote>
