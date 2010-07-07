@@ -2,6 +2,19 @@ package com.g2one.gtunes
 
 class StoreController {
 
+   def shoppingCartFlow = {
+      showCart {
+         on('checkout').to('enterPersonalDetails')
+         on('continueShopping').to('displayCatalogue')
+      }
+
+      displayInvoice()
+      
+      cancelTransaction {
+         redirect (controller: 'store')
+      }
+   }
+
    def index = {
    }
 
