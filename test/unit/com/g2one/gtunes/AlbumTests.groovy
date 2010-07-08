@@ -49,6 +49,28 @@ class AlbumTests extends GrailsUnitTestCase {
       assertFalse album.errors.hasFieldErrors('year')
    }
 
+   void testPriceConstraints() {
+      mockForConstraintsTests(Album)
+
+      println "testing nullable price"
+      def album = new Album()
+      assertFalse album.validate()
+      assertEquals "nullable", album.errors.price
+
+
+      println "testing invalid price"
+      // no error messages
+      album = new Album(price: 1.987)
+      assertFalse album.validate()
+      assertEquals null, album.errors.price
+      assertFalse 1.99 - album.price > 0.01
+
+      println "testing valid price"
+      album = new Album(price: 1.98)
+      assertFalse album.validate()
+      assertFalse album.errors.hasFieldErrors('price')
+   }
+
    void testToString() {
       def title = 'dummy'
       assertEquals title, new Album(title: title).toString()

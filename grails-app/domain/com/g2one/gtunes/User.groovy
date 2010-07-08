@@ -10,7 +10,10 @@ class User {
     Date dateCreated
     Date lastUpdated
 
-    static hasMany = [ purchasedSongs: Song ]
+    static hasMany = [
+       purchasedAlbums: Album,
+       purchasedSongs: Song
+    ]
 
     static constraints = {
         login (blank: false, size: 5..15, matches: /[\S]+/, unique: true)

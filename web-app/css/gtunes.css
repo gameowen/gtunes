@@ -174,12 +174,84 @@ p {
 }
 .album .albumLinks {
 	margin-top:20px;
+	margin-bottom:50px;
 }
 .album .albumLinks a:link, .album .albumLinks a:visited{
 	color:#01D2FA;
 	font-size:0.9em;
 	text-decoration:underline;
 }
+
+.shoppingCart {
+	border:1px dashed grey;
+	padding:10px;
+	margin:30px;
+	width:500px;
+	min-height:200px;
+	background-color:#F0F0F1;	
+	color:black;								
+}
+.shoppingCart h2 {
+	font-size:1.2em;
+	margin-bottom:10px;
+	font-weight:bold;
+	color:#01D2FA;
+	border-bottom:1px solid black;
+	width:400px;
+}
+.formButtons {
+	position:relative;
+	left:280px;
+	margin:0px;
+	padding:0px;
+}
+.formButtons input {
+	border:0px;
+	padding:0px;
+	margin:0px;
+	
+}
+.blueButton {
+	border:0px;
+	padding:0px;
+	margin:0px;
+	
+}
+.cardDetails {
+	padding-bottom:20px;
+}
+.shoppingCart .formFields {
+	margin-bottom:30px;
+}
+.shoppingCart .formFields input{
+	width:300px;
+}
+.shoppingCart #loginButton {
+	padding:0px;
+	border:0px;
+	position:relative;
+	right:5px;
+	top:100px;
+}
+.message {
+	width:500px;
+}
+.choiceButtons {
+	margin-top:75px;
+	margin-left:120px;
+}
+.formDialog {
+	margin-bottom:100px;
+}
+.recommendations {
+	width:400px;
+	border:0px;
+}
+.recommendation {
+    width:110px;
+	font-weight:bold;
+}
+
 .genreList {
 	margin-top:10px;
 }
@@ -191,8 +263,8 @@ p {
 
 .albumsTable {
 	margin-top:20px;
-	width:80%;
+	width:500px;
 }
 .paginateButtons {
-	width:79%;
+	width:492px;
 }

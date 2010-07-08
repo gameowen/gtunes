@@ -8,7 +8,11 @@ class AlbumController {
       def album = Album.get(params.id)
       if (album) {
          def artist = album.artist
-         render (template: 'album', model: [artist: artist, album: album])
+         if (request.xhr) {
+            render (template: 'album', model: [ artist: artist, album: album ])
+         } else {
+            render (view: 'show', model: [ artist: artist, album: album ])
+         }
       } else {
          render 'Album not found'
       }
@@ -17,7 +21,7 @@ class AlbumController {
    def show = {
       def album = Album.get(params.id)
       if (album) {
-         return [ album: album ]
+         return [ artist: album.artist, album: album ]
       } else {
          response.sendError 404
       }
