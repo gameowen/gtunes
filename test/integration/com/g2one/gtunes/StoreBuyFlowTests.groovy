@@ -5,6 +5,7 @@ import grails.test.*
 class StoreBuyFlowTests extends WebFlowTestCase {
 
 	def controller = new StoreController()
+
 	def getFlow() {
 		controller.buyFlow
 	}
@@ -12,6 +13,12 @@ class StoreBuyFlowTests extends WebFlowTestCase {
 	void setUp() {
 		super.setUp()
 	}
+
+   void tearDown() {
+      super.tearDown()
+      // http://github.com/grails/grails-core/blob/master/src/java/grails/test/MockUtils.groovy
+      MockUtils.resetIds()
+   }
 
 	void testMissingAlbumId() {
 		MockUtils.mockDomain(Album)
@@ -21,22 +28,26 @@ class StoreBuyFlowTests extends WebFlowTestCase {
 		assertFlowExecutionOutcomeEquals 'showStore'
 	}
 
-	void testNotLoggedIn() {
-		MockUtils.mockDomain(Album, [new Album(title:"Aha Shack Heartbreak", id:1L)])
-		controller.params.id = 1
-		startFlow()
-
-		assertFlowExecutionEnded()
-		assertFlowExecutionOutcomeEquals 'requiresLogin'
-	}
+   void testNotLoggedIn() {
+      MockUtils.mockDomain(Album, [new Album(title:"Aha Shack Heartbreak", id:1L)])
+      // you can't be sure about identifiers of mocked objects
+      // unless proper clearing will be done in tearDown
+      // look at
+      controller.params.id = 1
+      startFlow()
+   
+      assertFlowExecutionEnded()
+      assertFlowExecutionOutcomeEquals 'requiresLogin'
+   }
 
 	void testDontRequireHardCopyWithNoRecommendations() {
-		MockUtils.mockDomain(Album, [new Album(title:"Aha Shake Heartbreak", id:1L)])
+      def album = new Album(title:"Aha Shake Heartbreak", id:1L)
+		MockUtils.mockDomain(Album, [ album ])
 		Album.metaClass.static.withCriteria = { Closure s -> []}
 		MockUtils.mockDomain(AlbumPayment)
 		AlbumPayment.metaClass.static.withCriteria = { Closure s -> []}
 
-		def user = new User(login:"fred", id:1L)
+		def user = new User(login:"fred", id:1)
 		MockUtils.mockDomain(User, [user])
 		controller.session.user = user
 		controller.params.id = 1
@@ -45,11 +56,9 @@ class StoreBuyFlowTests extends WebFlowTestCase {
 
 		def model = getFlowScope()
       assertNotNull model.lastAlbum
-      
 		assertEquals 1, model.albumPayments.size()
 		def albumPayment = model.albumPayments[0]
-		assertNotNull albumPayment?.album
-		assertEquals "Aha Shake Heartbreak", albumPayment.album.title
+		assertEquals album.title, albumPayment.album.title
 		assertEquals albumPayment, model.lastAlbum
 
 		signalEvent "no"
@@ -123,11 +132,11 @@ class StoreBuyFlowTests extends WebFlowTestCase {
 		currentState = "showConfirmation"
 		def model = getFlowScope()
 		model.creditCard = new CreditCardCommand(
-							name :"MR Joe Bloggs",
-							number:"4111111111111111",
-							expiry:"01/01",
-							code  :999
-							)
+         name :"MR Joe Bloggs",
+         number:"4111111111111111",
+         expiry:"01/01",
+         code  :999
+      )
 
 		model.user = new User(login:"joebloggs", password:"foobar", firstName:"Joe", lastName:"Bloggs")
 		model.user.id = 1L
@@ -142,6 +151,5 @@ class StoreBuyFlowTests extends WebFlowTestCase {
 
 		assertFlowExecutionEnded()
 		assertFlowExecutionOutcomeEquals 'displayInvoice'
-
 	}
 }

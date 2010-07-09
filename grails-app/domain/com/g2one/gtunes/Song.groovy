@@ -1,6 +1,6 @@
 package com.g2one.gtunes
 
-class Song {
+class Song implements Serializable {
 
    String title
    String genre

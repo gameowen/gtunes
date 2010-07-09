@@ -22,10 +22,13 @@ class StoreController {
 	}
 
 	private addAlbumToCartAction = {
-		if(!flow.albumPayments) flow.albumPayments = []
+		if(!flow.albumPayments) {
+         flow.albumPayments = []
+      }
 		def album = Album.get(params.id)
 
 		if(!flow.albumPayments.album.find { it?.id == album.id }) {
+         log.info "Setting flow.lastAlbum for album=${album}"
 			flow.lastAlbum = new AlbumPayment(album:album)
 			flow.albumPayments << flow.lastAlbum
 		}
