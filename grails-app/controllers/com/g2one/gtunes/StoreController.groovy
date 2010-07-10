@@ -2,6 +2,8 @@ package com.g2one.gtunes
 
 class StoreController {
 
+   def storeService
+
     def index = {
     }
 
@@ -148,31 +150,12 @@ class StoreController {
 		}
 		showConfirmation {
 			on('confirm') {
-				// NOTE: Dummy implementation of transaction processing, a real system would
-				// integrate an e-commerce solution
-				def user = flow.user
-				def albumPayments = flow.albumPayments
-				def p = new Payment(user:user)
-				flow.payment = p
-				p.invoiceNumber = "INV-${user.id}-${System.currentTimeMillis()}"
-				def creditCard = flow.creditCard
-				assert creditCard.validate()
-				// TODO: Use credit card to take payment
-				// ...
-
-				// Once payment taken update user profile
-				for(ap in albumPayments) {
-					ap.user = user
-					// validation should never fail at this point
-					assert ap.validate()
-
-					p.addToAlbumPayments(ap)
-				    assert p.save(flush:true)
-
-					ap.album.songs.each { user.addToPurchasedSongs(it) }
-					user.addToPurchasedAlbums(ap.album)
-					assert user.save(flush:true)
-				}
+				flow.payment = 
+               storeService.purchaseAlbums(
+                  flow.user,
+                  flow.creditCard,
+                  flow.albumPayments
+            )
 			}.to 'displayInvoice'
 			on('back').to 'enterCardDetails'
 			on('error').to 'displayError'
