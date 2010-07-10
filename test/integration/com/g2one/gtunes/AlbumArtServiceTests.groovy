@@ -38,6 +38,9 @@ class AlbumArtServiceTests extends GrailsUnitTestCase {
       }
       def albumArtService = new AlbumArtService()
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
+      albumArtService.secretKey = 'dummy'
+      albumArtService.endpoint = 'ecw.amazon.com'
+
       assertEquals '/mock/url/album.jpg', albumArtService.getAlbumArt("RadioHead", "The Bends")
    }
 

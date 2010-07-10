@@ -52,7 +52,7 @@ class AlbumArtTagLibTests extends GroovyPagesTestCase {
          return '/mock/url/album.jpg'
       }
       albumArtService.accessKeyId = 'AKIAIYQNVUS6VP5E7IPQ'
-      albumArtService.secretAccessKey = 'dummy'
+      albumArtService.secretKey = 'dummy'
       albumArtService.endpoint = 'ecw.amazon.com' 
 
       def template = '<music:albumArt artist="Radiohead" album="The Bends" />'

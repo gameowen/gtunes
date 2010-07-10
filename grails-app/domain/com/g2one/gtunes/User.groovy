@@ -1,6 +1,6 @@
 package com.g2one.gtunes
 
-class User {
+class User implements Serializable {
 
     String login
     String password
