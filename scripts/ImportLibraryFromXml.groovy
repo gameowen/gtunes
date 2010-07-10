@@ -28,7 +28,7 @@ target(main: "Imports data kept in the gtunes XML format into the database") {
 						def album = Album.newInstance(title:alb.@title.text(),
 														   genre:alb.@genre.text(),
 														   year:alb.@year.text()
-														   //,price:alb.@price.text()
+														   ,price:alb.@price.text()
                                           )
 						artist.addToAlbums(album)
 						alb.song.eachWithIndex { s, i ->
