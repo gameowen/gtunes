@@ -31,7 +31,7 @@ class StoreService {
          ap.album.songs.each { user.addToPurchasedSongs(it) }
          user.addToPurchasedAlbums(ap.album)
       }
-      if (user.save(flush: true)) {
+      if (!user.save(flush: true)) {
          throw new IllegalStateException("User must be valid")
       }
       return p
