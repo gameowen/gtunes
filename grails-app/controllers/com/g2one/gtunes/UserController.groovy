@@ -2,6 +2,8 @@ package com.g2one.gtunes
 
 class UserController {
 
+   def mailService
+
    def register = {
       if (request.method == "POST") {
          def u = new User(params)
@@ -10,8 +12,22 @@ class UserController {
          } else if (u.password != params.confirm) {
             u.errors.rejectValue("password", "user.password.dontmatch")
             return [ user: u ]
+         } else if (u.email != params.confirmEmail) {
+            u.errors.rejectValue("email", "user.email.dontmatch")
          } else if (u.save()) {
             session.user = u
+            try {
+               sendMail {
+                  to u.email
+                  subject "Registration Confirmation"
+                  body view: '/emails/confirmRegistration', model: [ user: u ]
+               }
+            } catch(Exception e) {
+               log.error "Problem sending email ${e.message}", e
+            }
+            if (params.newsletter) {
+               new Subscription(type: SubscriptionType.NEWSLETTER, user: u).save()
+            }
             redirect(controller: "store")
          } else {
             return [ user: u ]

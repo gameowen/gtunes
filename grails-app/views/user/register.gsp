@@ -54,6 +54,18 @@
 				<label for="lastName">Last Name:</label>
 				<g:textField name="lastName" value="${user?.lastName}"></g:textField>
 			</div>	
+			<div class="formField">
+				<label for="email">Email:</label>
+				<g:textField name="email" value="${user?.email}"></g:textField>
+			</div>
+			<div class="formField">
+				<label for="confirmEmail">Confirm Email:</label>
+				<g:textField name="confirmEmail" value="${params?.confirmEmail}"></g:passwordField>
+			</div>
+			<div class="formField">
+				Please tick the following box if you wish to subscribe to the weekly gTunes newsletter
+            <g:checkBox name="newsletter"></g:checkBox>
+			</div>
 			<g:submitButton class="formButton" name="register" value="Register"></g:submitButton>					
 		</g:form>
 	</body>

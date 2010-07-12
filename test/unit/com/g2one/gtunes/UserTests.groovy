@@ -118,4 +118,32 @@ class UserTests extends GrailsUnitTestCase {
       assertTrue user.validate()
    }
 
+   void testEmailConstraints() {
+      def  existingUser = new User(login: 'first', password: 'tajne', firstName: 'first', lastName: 'last', email: 'a@b.com')
+      mockForConstraintsTests(User, [ existingUser ])
+
+      println 'testing nullable email'
+      def user = new User()
+      assertFalse user.validate()
+      assertEquals "nullable", user.errors.email
+
+      println 'testing blank email'
+      user = new User(email: '')
+      assertFalse user.validate()
+      assertEquals "blank", user.errors.email
+
+      println 'testing invalid email'
+      user = new User(email: "a@b")
+      assertFalse user.validate()
+      assertEquals "email", user.errors.email
+
+      println 'testing not unique email'
+      user = new User(email: "a@b.com")
+      assertFalse user.validate()
+      assertEquals "unique", user.errors.email
+
+      println 'testing valid email'
+      assertTrue existingUser.validate()
+   }
+
 }

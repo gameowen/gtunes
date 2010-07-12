@@ -6,6 +6,7 @@ class User implements Serializable {
     String password
     String firstName
     String lastName
+    String email
 
     Date dateCreated
     Date lastUpdated
@@ -20,6 +21,7 @@ class User implements Serializable {
         password (blank: false, size: 5..15, matches: /[\S]+/)
         firstName (blank: false)
         lastName (blank: false)
+        email (email: true, blank: false, unique: true)
     }
 
 }
