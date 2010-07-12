@@ -16,7 +16,7 @@ target(main: "Imports data kept in the gtunes XML format into the database") {
 	}
 	else {
 		def xml = new XmlSlurper().parse(file)
-		println "Importing. Please wait..."
+		println "Importing. Please wait... "
 		Artist.withTransaction { status ->
 			Artist.withSession { session ->
 				for(a in xml.artist) {
