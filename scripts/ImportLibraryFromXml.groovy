@@ -1,6 +1,4 @@
-grailsHome = ant.project.properties."environment.GRAILS_HOME"
-
-includeTargets << new File ( "${grailsHome}/scripts/Bootstrap.groovy" )
+includeTargets << grailsScript("Bootstrap")
 
 target(main: "Imports data kept in the gtunes XML format into the database") {
 	depends(parseArguments)
@@ -26,19 +24,19 @@ target(main: "Imports data kept in the gtunes XML format into the database") {
 					println "Importing artist $artist.name.."
 					for(alb in a.album) {
 						def album = Album.newInstance(title:alb.@title.text(),
-														   genre:alb.@genre.text(),
-														   year:alb.@year.text()
-														   ,price:alb.@price.text()
-                                          )
+                     genre:alb.@genre.text(),
+                     year:alb.@year.text(),
+                     price:alb.@price.text()
+                  )
 						artist.addToAlbums(album)
 						alb.song.eachWithIndex { s, i ->
 
 							def song = Song.newInstance(title:s.@title.text(),
-															 duration:s.@duration.text(),
-															 trackNumber:i+1,
-															 genre: album.genre,
-															 year: album.year,
-															 artist:artist)
+                        duration:s.@duration.text(),
+                        trackNumber:i+1,
+                        genre: album.genre,
+                        year: album.year,
+                        artist:artist)
 							album.addToSongs(song)
 						}
 					}
@@ -47,7 +45,7 @@ target(main: "Imports data kept in the gtunes XML format into the database") {
 					   println "Import Failed: Validation error occured import artist ${artist.name}, data appears corrupt."
 					   break
 				   }
-   				   session.clear()
+               session.clear()
 				}
 			}
 
